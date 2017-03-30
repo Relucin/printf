@@ -6,12 +6,11 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 00:56:57 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/03/30 03:04:35 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftpf_checks.h"
-#include <stdarg.h>
 
 #define CHECKS 4
 #include <stdio.h>
@@ -20,7 +19,7 @@ t_list	*create_tokens(const char *format)
 {
 	t_list					*tokns = 0;
 	t_part					*part;
-	int						i;
+	int							i;
 
 	i = 0;
 	while (format[i])

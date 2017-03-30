@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ftpf_checks.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmontoya <bmontoya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 16:50:14 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/29 17:22:27 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/03/30 01:04:06 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		check_length(const char **format, t_part *part)
 {
 	static const char	*dlength = "hl";
 	static const char	*length = "jzL";
-	int					i;
+	int								i;
 
 	i = 0;
 	while (dlength[i] && dlength[i] != **format)
