@@ -1,0 +1,56 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ft_putsub	/nfs/2017/b/bmontoya/Projects/printf/ft_old_printf.c	/^void	ft_putsub(const char* str, int start, size_t len)$/;"	function	line:17	signature:(const char* str, int start, size_t len)
+check_parameter	/nfs/2017/b/bmontoya/Projects/printf/ft_old_printf.c	/^int		check_parameter(const char *format)$/;"	function	line:153	signature:(const char *format)
+make_tokens	/nfs/2017/b/bmontoya/Projects/printf/ft_old_printf.c	/^t_list	*make_tokens(const char *format)$/;"	function	line:163	signature:(const char *format)
+ft_printf	/nfs/2017/b/bmontoya/Projects/printf/ft_old_printf.c	/^int		ft_printf(const char* format, ...)$/;"	function	line:168	signature:(const char* format, ...)
+main	/nfs/2017/b/bmontoya/Projects/printf/ft_old_printf.c	/^int		main()$/;"	function	line:180
+s_hash	/nfs/2017/b/bmontoya/Projects/printf/ft_hash.c	/^typedef struct	s_hash$/;"	struct	line:15	file:
+map	/nfs/2017/b/bmontoya/Projects/printf/ft_hash.c	/^	void		**map;$/;"	member	line:17	struct:s_hash	file:
+size	/nfs/2017/b/bmontoya/Projects/printf/ft_hash.c	/^	size_t		size;$/;"	member	line:18	struct:s_hash	file:
+t_hash	/nfs/2017/b/bmontoya/Projects/printf/ft_hash.c	/^}				t_hash;$/;"	typedef	line:19	typeref:struct:s_hash	file:
+ft_hashnew	/nfs/2017/b/bmontoya/Projects/printf/ft_hash.c	/^t_hash	*ft_hashnew(size_t size)$/;"	function	line:21	signature:(size_t size)
+FT_PRINTF_H	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^# define FT_PRINTF_H$/;"	macro	line:14
+e_flag	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^typedef enum	e_flag$/;"	enum	line:16
+ALT	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	ALT = 1,$/;"	enumerator	line:18	enum:e_flag
+ZER	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	ZER = 2,$/;"	enumerator	line:19	enum:e_flag
+NEG	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	NEG = 4,$/;"	enumerator	line:20	enum:e_flag
+SPC	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	SPC = 8,$/;"	enumerator	line:21	enum:e_flag
+PLS	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	PLS = 16$/;"	enumerator	line:22	enum:e_flag
+t_flag	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^}				t_flag;$/;"	typedef	line:23	typeref:enum:e_flag
+e_length	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^typedef enum	e_length$/;"	enum	line:25
+hh	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	hh = 1,$/;"	enumerator	line:27	enum:e_length
+h	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	h = 2,$/;"	enumerator	line:28	enum:e_length
+l	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	l = 3,$/;"	enumerator	line:29	enum:e_length
+ll	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	ll = 4,$/;"	enumerator	line:30	enum:e_length
+j	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	j = 5,$/;"	enumerator	line:31	enum:e_length
+z	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	z = 6,$/;"	enumerator	line:32	enum:e_length
+L	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	L = 7$/;"	enumerator	line:33	enum:e_length
+t_length	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^}				t_length;$/;"	typedef	line:34	typeref:enum:e_length
+s_part	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^typedef struct	s_part$/;"	struct	line:36
+str	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	char			*str;$/;"	member	line:38	struct:s_part
+flags	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	unsigned char	flags;$/;"	member	line:39	struct:s_part
+prec	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	unsigned char	prec : 1;$/;"	member	line:40	struct:s_part
+arg	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	int		arg;$/;"	member	line:41	struct:s_part
+width	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	int		width;$/;"	member	line:42	struct:s_part
+pmin	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	int		pmin;$/;"	member	line:43	struct:s_part
+length	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	int		length;$/;"	member	line:44	struct:s_part
+type	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^	int		type;$/;"	member	line:45	struct:s_part
+t_part	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^}				t_part;$/;"	typedef	line:46	typeref:struct:s_part
+t_check	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.h	/^typedef int (*t_check)(const char **, t_part *);$/;"	typedef	line:48
+FTPF_CHECKS_H	/nfs/2017/b/bmontoya/Projects/printf/ftpf_checks.h	/^# define FTPF_CHECKS_H$/;"	macro	line:14
+INCLUDES	/nfs/2017/b/bmontoya/Projects/printf/Makefile	/^INCLUDES = ft_printf.o \\$/;"	macro	line:1
+FLAGS	/nfs/2017/b/bmontoya/Projects/printf/Makefile	/^FLAGS 	 =  -L..\/libft -lft$/;"	macro	line:3
+NAME	/nfs/2017/b/bmontoya/Projects/printf/Makefile	/^NAME		 = main$/;"	macro	line:4
+check_flags	/nfs/2017/b/bmontoya/Projects/printf/ftpf_checks.c	/^int		check_flags(const char **format, t_part *part)$/;"	function	line:15	signature:(const char **format, t_part *part)
+check_precision	/nfs/2017/b/bmontoya/Projects/printf/ftpf_checks.c	/^int		check_precision(const char **format, t_part *part)$/;"	function	line:32	signature:(const char **format, t_part *part)
+check_length	/nfs/2017/b/bmontoya/Projects/printf/ftpf_checks.c	/^int		check_length(const char **format, t_part *part)$/;"	function	line:49	signature:(const char **format, t_part *part)
+check_numbers	/nfs/2017/b/bmontoya/Projects/printf/ftpf_checks.c	/^int	check_numbers(const char **format, t_part *part)$/;"	function	line:82	signature:(const char **format, t_part *part)
+CHECKS	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.c	/^#define CHECKS /;"	macro	line:16	file:
+create_tokens	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.c	/^t_list	*create_tokens(const char *format)$/;"	function	line:19	signature:(const char *format)
+ft_printf	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.c	/^int		ft_printf(const char *format, ...)$/;"	function	line:71	signature:(const char *format, ...)
+main	/nfs/2017/b/bmontoya/Projects/printf/ft_printf.c	/^int		main(void)$/;"	function	line:88	signature:(void)
