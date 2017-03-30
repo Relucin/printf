@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
 /*   Updated: 2017/03/30 00:34:49 by bmontoya         ###   ########.fr       */
+=======
+/*   By: bmontoya <bmontoya@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
+/*   Updated: 2017/03/29 16:58:43 by bmontoya         ###   ########.fr       */
+>>>>>>> 13c4a04b057e381adbd4cb87ade59ea59b313529
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+<<<<<<< HEAD
 # include "libft.h"
+=======
+# include "../libft/libft.h"
+>>>>>>> 13c4a04b057e381adbd4cb87ade59ea59b313529
 typedef enum	e_flag
 {
 	ALT = 1,
