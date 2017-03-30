@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 00:45:06 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/03/30 00:56:57 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int		ft_printf(const char *format, ...)
 
 	va_start(ap, format);
 	tokens = create_tokens(format);
+	//Test
 	while (tokens)
 	{
 		ft_putstr(((t_part*)tokens->content)->str);
