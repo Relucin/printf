@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 03:04:35 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/03/30 20:10:14 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,28 +66,32 @@ t_list	*create_tokens(const char *format)
 	}
 	return (tokns);
 }
+int		ft_vprintf(const char *format, va_list ap)
+{
+	va_list	ask;
+	int			w;
 
+	va_copy(ask,ap);
+	w = 0;
+
+	return (0);
+}
 int		ft_printf(const char *format, ...)
 {
 	va_list ap;
-	t_list *tokens;
+	int			i;
 
 	va_start(ap, format);
-	tokens = create_tokens(format);
-	//Test
-	while (tokens)
-	{
-		ft_putstr(((t_part*)tokens->content)->str);
-		tokens = tokens->next;
-	}
+	i = ft_vprintf(format, ap);
 	va_end(ap);
-	return (0);
+	return (i);
 }
 
 #include <stdio.h>
 int		main(void)
 {
-	 ft_printf("TEST %d Hello%dTesting%s World\n", 'c', NULL);
+	ft_printf("TEST %d Hello%dTesting%s World\n", 'c', NULL);
+
 	// printf("Size of %*s is %lu\n", 13, "char",sizeof(char));
 	// printf("Size of %*s is %lu\n", 13, "void",sizeof(void));
 	// printf("Size of %*s is %lu\n", 13, "short",sizeof(short));
