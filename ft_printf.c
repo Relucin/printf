@@ -6,67 +6,11 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 22:29:13 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/03/31 02:29:53 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftpf_checks.h"
-
-#define CHECKS 4
-#include <stdio.h>
-//TODO: Create a function to build s_parts??
-
-/*t_list	*create_tokens(const char *format)
-{
-	t_list					*tokns = 0;
-	t_part					*part;
-	int							i;
-
-	i = 0;
-	while (format[i])
-	{
-		if (format[i] == '%')
-		{
-			if (i)
-			{
-				part = malloc(sizeof(t_part));
-				part->str = ft_strsub(format, 0, i);
-				ft_lstaddback(&tokns, ft_lstnew(part,sizeof(part)));
-				format += i;
-				i = 0;
-			}
-			format++; //Removes the %
-			part = malloc(sizeof(t_part));
-			part->prec = 0;
-			part->str = ft_strdup("{}");
-			while (1)
-			{
-				if (check_flags(&format, part))
-					continue;
-				if (check_length(&format, part))
-					continue;
-				if (check_precision(&format, part))
-					continue;
-				if (check_numbers(&format, part))
-					continue;
-				break;
-			}
-			ft_lstaddback(&tokns, ft_lstnew(part,sizeof(part)));
-			//TODO: Something with the type
-			//Push first va_list into some data structure
-			format++; //Removes the type
-		}
-		else
-			i++;
-	}
-	if (i)
-	{
-		part = malloc(sizeof(t_part));
-		part->str = ft_strdup(format);
-		ft_lstaddback(&tokns, ft_lstnew(part,sizeof(part)));
-	}
-	return (tokns);
-}*/
 
 static void	make_part(const char **format, t_list **tokens, va_list ask)
 {
@@ -74,7 +18,6 @@ static void	make_part(const char **format, t_list **tokens, va_list ask)
 	t_part	*info;
 	t_list	*node;
 
-	part.prec = 0;
 	node = ft_lstnew(&part, sizeof(&part));
 	info = malloc(sizeof(t_part));
 	info->flags = 0;
@@ -88,15 +31,15 @@ static void	make_part(const char **format, t_list **tokens, va_list ask)
 			if (!check_precision(format, info))
 				if (!check_length(format, info))
 					if (!check_numbers(format, info))
-						{
-							info->type = **format;
 							break;
-						}
 	}
+	info->type = **format;
 	(*format)++;
 	((t_gpart*)node->content)->data = info;
+	((t_gpart*)node->content)->prec = 0;
 	ft_lstaddback(tokens, node);
 }
+
 static void	make_partstr(const char **format, int *i, t_list **tokens)
 {
 	t_list *node;
@@ -112,6 +55,7 @@ static void	make_partstr(const char **format, int *i, t_list **tokens)
 	ft_lstaddback(tokens, node);
 }
 
+//TODO: Pass in ap and darray to properly place values
 static void	print_list(t_list *tokens)
 {
 	t_gpart *tmp;
@@ -124,6 +68,7 @@ static void	print_list(t_list *tokens)
 		else
 		{
 			tmp2 = (t_part*)tmp->data;
+			//TODO: Modify this to have a function print out the proper thing
 			ft_putchar(tmp2->type);
 		}
 		tokens = tokens->next;
@@ -133,7 +78,7 @@ static void	print_list(t_list *tokens)
 int		ft_vprintf(const char *format, va_list ap)
 {
 	va_list	ask;
-	//Have dynamic int array to properly get data from ap
+	//TODO: Have dynamic int array to properly get data from ap
 	t_list	*tokens;
 	int			i;
 
@@ -148,6 +93,7 @@ int		ft_vprintf(const char *format, va_list ap)
 			if (i > 0)
 				make_partstr(&format, &i, &tokens);
 			format++;
+			//Pass in dintarray ??
 			make_part(&format, &tokens, ask);
 		}
 		i++;
