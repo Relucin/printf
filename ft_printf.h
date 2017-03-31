@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 19:50:58 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/03/30 21:00:54 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,23 @@ typedef enum	e_length
 	L = 7
 }				t_length;
 
+typedef struct	s_gpart
+{
+	unsigned char prec : 1;
+	void					*data;
+}								t_gpart;
+
 typedef struct	s_part
 {
-	char			*str;
 	unsigned char	flags;
 	unsigned char	prec : 1;
-	int		arg;
-	int		width;
-	int		pmin;
-	int		length;
-	int		type;
-}				t_part;
+	int						arg;
+	int						width;
+	int						pmin;
+	int						length;
+	char					type;
+}								t_part;
 
-typedef struct	s_args
-{
-	va_list ap;
-	va_list *aps;
-}								t_args;
 typedef int (*t_check)(const char **, t_part *);
 
 #endif
