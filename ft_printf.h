@@ -6,13 +6,14 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 21:00:54 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/02 01:11:16 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "libft.h"
+# include "ftpf_dintarray.h"
 # include <stdarg.h>
 typedef enum	e_flag
 {
@@ -52,5 +53,5 @@ typedef struct	s_part
 }								t_part;
 
 typedef int (*t_check)(const char **, t_part *);
-
+int		ft_printf(const char *format, ...);
 #endif
