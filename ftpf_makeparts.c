@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 23:35:39 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/02 01:20:13 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/02 23:58:35 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_list	*make_part(const char **format, va_list ask, t_diarr *arr)
 		if (!check_flags(format, info))
 			if (!check_precision(format, info))
 				if (!check_length(format, info))
-					if (!check_numbers(format, info))
+					if (!check_numbers(format, info, arr))
 							break;
 	}
 	info->type = **format;

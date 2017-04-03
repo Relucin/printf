@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 16:50:14 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/03/30 01:04:06 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/03 00:46:50 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int		check_length(const char **format, t_part *part)
 	return (0);
 }
 
-int	check_numbers(const char **format, t_part *part)
+int	check_numbers(const char **format, t_part *part, t_diarr *arr)
 {
 	unsigned long long int result;
 
