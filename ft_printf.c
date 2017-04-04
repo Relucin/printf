@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/04 00:20:31 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/04 08:32:16 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ void	print_tokens(t_part *token, t_diarr *arr, va_list ap, int *n)
 		loc++;
 	if (types[loc])
 	{
-		ft_putstr("#>");
 		(void)g_func[loc](token, ap, n);
 	}
 	else
 	{
-		ft_putstr("->");
 		ft_putchar(token->type);
 	}
 	va_end(cpy);
@@ -58,12 +56,10 @@ int		print_list(t_list *tokens, t_diarr *arr, va_list ap)
 		tmp = (t_gpart*)tokens->content;
 		if (tmp->prec)
 		{
-			ft_putstr("x>");
 			ft_putstr((char*)tmp->data);
 		}
 		else
 		{
-			ft_putstr("*>");
 			print_tokens(tmp->data, arr, ap, &n);
 		}
 		tokens = tokens->next;
