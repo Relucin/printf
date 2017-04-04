@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 16:50:14 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/03 00:46:50 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/03 21:09:11 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ int		check_precision(const char **format, t_part *part)
 /*
 ** TODO: Do comparisions when figure out how to set t_part
 */
+
 int		check_length(const char **format, t_part *part)
 {
-	static const char	*dlength = "hl";
-	static const char	*length = "jzL";
-	int								i;
+	static const char		*dlength = "hl";
+	static const char		*length = "jzL";
+	int						i;
 
 	i = 0;
 	while (dlength[i] && dlength[i] != **format)
@@ -79,20 +80,34 @@ int		check_length(const char **format, t_part *part)
 	return (0);
 }
 
-int	check_numbers(const char **format, t_part *part, t_diarr *arr)
+int		check_numbers(const char **f, t_part *part, va_list ask, t_diarr *arr)
 {
 	unsigned long long int result;
 
 	result = 0;
-	while (ft_isdigit(**format))
+	while (ft_isdigit(**f))
 	{
-		result = (result * 10) + (**format - '0');
-		(*format)++;
+		result = (result * 10) + (**f - '0');
+		(*f)++;
+	}
+	if (!result && **f == '*')
+	{
+		(*f)++;
+		if (**f == '$')
+		{
+			(*f)++;
+			return (1);
+		}
+		arr->array[arr->len - 1] += 1;
+		result = va_arg(ask, int);
 	}
 	if (result)
 	{
-		if (**format == '$')
+		if (**f == '$')
+		{
 			part->arg = result;
+			(*f)++;
+		}
 		else if (part->prec)
 			part->pmin = result;
 		else

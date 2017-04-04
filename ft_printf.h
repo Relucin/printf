@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/02 01:11:16 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/03 23:20:49 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,17 @@
 # include "libft.h"
 # include "ftpf_dintarray.h"
 # include <stdarg.h>
-typedef enum	e_flag
+
+typedef enum		e_flag
 {
 	ALT = 1,
 	ZER = 2,
 	NEG = 4,
 	SPC = 8,
 	PLS = 16
-}				t_flag;
+}					t_flag;
 
-typedef enum	e_length
+typedef enum		e_length
 {
 	hh = 1,
 	h = 2,
@@ -33,25 +34,26 @@ typedef enum	e_length
 	j = 5,
 	z = 6,
 	L = 7
-}				t_length;
+}					t_length;
 
-typedef struct	s_gpart
+typedef struct		s_gpart
 {
-	unsigned char prec : 1;
-	void					*data;
-}								t_gpart;
+	unsigned char	prec : 1;
+	void			*data;
+}					t_gpart;
 
-typedef struct	s_part
+typedef struct		s_part
 {
 	unsigned char	flags;
 	unsigned char	prec : 1;
-	int						arg;
-	int						width;
-	int						pmin;
-	int						length;
-	char					type;
-}								t_part;
+	int				arg;
+	int				width;
+	int				pmin;
+	int				length;
+	char			type;
+}					t_part;
 
-typedef int (*t_check)(const char **, t_part *);
-int		ft_printf(const char *format, ...);
+typedef void		(*t_parse)(t_part *, va_list, int *);
+int					ft_printf(const char *format, ...);
+void				ftfp_string(t_part *token, va_list ap, int *n);
 #endif

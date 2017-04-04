@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/30 19:50:10 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/02 23:52:06 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/03 17:27:16 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 int		check_flags(const char **format, t_part *part);
 int		check_precision(const char **format, t_part *part);
 int		check_length(const char **format, t_part *part);
-int   check_numbers(const char **format, t_part *part, t_diarr *arr);
+int   check_numbers(const char **format, t_part *part, va_list ask, t_diarr * arr);
 #endif
