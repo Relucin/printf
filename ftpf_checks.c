@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/29 16:50:14 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/03 21:09:11 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/04 14:53:24 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int		check_length(const char **format, t_part *part)
 		(*format)++;
 		if (**format == dlength[i])
 		{
-			part->length = (i) ? ll : hh;
+			part->length |= (i) ? ll : hh;
 			(*format)++;
 		}
 		else
-			part->length = (i) ? l : h;
+			part->length |= (i) ? l : h;
 		return (1);
 	}
 	i = 0;
@@ -74,7 +74,7 @@ int		check_length(const char **format, t_part *part)
 	if (length[i])
 	{
 		(*format)++;
-		part->length = i + 4;
+		part->length |= ((1 << 3) << (i + 1));
 		return (1);
 	}
 	return (0);

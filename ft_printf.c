@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/04 08:32:16 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/04 14:36:04 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 t_parse			g_func[1] = {&ftfp_string};
 
-void	print_tokens(t_part *token, t_diarr *arr, va_list ap, int *n)
-{
+void	print_tokens(t_part *token, t_diarr *arr, va_list ap, int *n) {
 	va_list			cpy;
 	static char		*types = "s";
 	int				loc;

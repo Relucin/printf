@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/03 23:20:49 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/04 16:39:23 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_PRINTF_H
 # include "libft.h"
 # include "ftpf_dintarray.h"
+# include "wchar.h"
 # include <stdarg.h>
 
 typedef enum		e_flag
@@ -29,11 +30,11 @@ typedef enum		e_length
 {
 	hh = 1,
 	h = 2,
-	l = 3,
-	ll = 4,
-	j = 5,
-	z = 6,
-	L = 7
+	l = 4,
+	ll = 8,
+	j = 16,
+	z = 32,
+	L = 64
 }					t_length;
 
 typedef struct		s_gpart
