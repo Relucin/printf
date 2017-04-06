@@ -1,8 +1,10 @@
 INCLUDES = ft_printf.o \
 						ftpf_checks.o \
 						ftpf_dintarray.o \
+						ftpf_dchararray.o \
 						ftpf_makeparts.o \
 						ftpf_strings.o \
+						ft_darray.o \
 						main.o
 FLAGS 	 = -Llibft -lft
 FLAGS2	 = -Ilibft -I.

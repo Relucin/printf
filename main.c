@@ -5,35 +5,62 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/03 22:31:06 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/04 21:27:54 by bmontoya         ###   ########.fr       */
+/*   Created: 2017/04/05 12:20:27 by bmontoya          #+#    #+#             */
+/*   Updated: 2017/04/06 01:09:14 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <stdio.h>
 #include <locale.h>
-int	main(void)
-{
-	wchar_t c =  L'字';
-	setlocale(LC_CTYPE, "");
-	//ft_printf("Hello %3$s %1$s %2$s\n", "World", "Hello", "Test");
-	//ft_printf("%s\n", "Hello");
-	ft_printf("%ls\n", L"字a");
-	printf("%ls\n", L"字");
-	//printf("%d\n", printf("%lsa\n", L"Hello"));
-	//printf("%d\n", printf("%lsa\n", L"Hello§"));
-	//ft_printf("%-10.10sa\n", "Hello");
-	//printf("%-10.10sa\n", "Hello");
-	//ft_printf("%.10sa\n", "Hello");
-	//printf("%.10sa\n", "Hello");
-	//ft_printf("%.3sa\n", 0);
-	//printf("%.3sa\n", 0);
-	//ft_printf("%-10sa\n", "Hello");
-	//printf("%-10sa\n", "Hello");
-}
+#include <stdio.h>
+// #include "ft_printf.h"
+#include "ft_darray.h"
 
-/*
-**	printf("Hello %3$s %1$s %2$s\n","World", "Hello", "Test");
-**}
-*/
+/*#define SELF 1
+#define	REAL 2
+void	ft_printf_wstringtests(int i)
+{
+	wchar_t *str = L"ᆀǑǒǛڕiۂᅿᆀᆁ";
+	char	*fmt = "%.4ls\n";
+
+	if (i & SELF)
+		ft_printf(fmt, str);
+	if (i & REAL)
+		printf(fmt, str);
+}*/
+
+int		main(void)
+{
+	t_darr	*test;
+	long	*tmp;
+	// int		i = 0;
+	setlocale(LC_ALL, "");
+	//ft_printf_wstringtests(3);
+	test = ft_darrnew(2, sizeof(long));
+	ft_darraddback(test, 20);
+	ft_darraddback(test, 21);
+	ft_darraddback(test, 22);
+	ft_darraddback(test, 23);
+	ft_darraddback(test, 24);
+	ft_darraddback(test, 25);
+	ft_darraddback(test, 26);
+	ft_darraddback(test, 27);
+	ft_darraddback(test, 1000002323224);
+	/*ft_darraddback(test, 'j');
+	ft_darraddback(test, 'k');
+	ft_darraddback(test, 'l');
+	ft_darraddback(test, 'm');
+	ft_darraddback(test, 'n');
+	ft_darraddback(test, 'o');
+	ft_darraddback(test, 'p');
+	ft_darraddback(test, 'q');
+	ft_darraddback(test, 'r');
+	ft_darraddback(test, 's');
+	ft_darraddback(test, 't');
+	ft_darraddback(test, 'u');
+	ft_darraddback(test, '\0');*/
+	tmp = (long*)test->array;
+	// while (i < ft_darrlen(test))
+	// {
+	printf("%ld\n", ft_darrget(test, 8));
+	// }
+}

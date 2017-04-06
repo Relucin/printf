@@ -6,14 +6,14 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/04 16:39:23 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/05 23:09:30 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "libft.h"
-# include "ftpf_dintarray.h"
+# include "ftpf_darrays.h"
 # include "wchar.h"
 # include <stdarg.h>
 
