@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 21:41:08 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/06 01:18:45 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/06 15:02:43 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,11 @@ size_t	ft_darrlen(t_darr *arr)
 int64_t	ft_dag(t_darr *arr, size_t index)
 {
 	return (*((int64_t*)(arr->array + (index * arr->size))));
+}
+
+void	ft_darrdel(t_darr **arr)
+{
+	free((*arr)->array);
+	free(*arr);
+	*arr = 0;
 }

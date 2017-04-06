@@ -15,6 +15,6 @@
 # include "ft_printf.h"
 # include "ftpf_checks.h"
 
-t_list	*make_part(const char **format, va_list ask, t_diarr *arr, int *arg);
+t_list	*make_part(const char **format, va_list ask, t_darr *arr, int *arg);
 void	make_partstr(const char **format, int *i, t_list **tokens);
 #endif

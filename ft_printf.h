@@ -6,14 +6,14 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/05 23:09:30 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/06 16:49:46 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "libft.h"
-# include "ftpf_darrays.h"
+# include "ft_darray.h"
 # include "wchar.h"
 # include <stdarg.h>
 
@@ -47,10 +47,10 @@ typedef struct		s_part
 {
 	unsigned char	flags;
 	unsigned char	prec : 1;
-	int				arg;
-	int				width;
-	int				pmin;
-	int				length;
+	size_t			arg;
+	size_t			width;
+	size_t			pmin;
+	size_t			length;
 	char			type;
 }					t_part;
 

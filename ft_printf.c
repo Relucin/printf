@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/05 16:32:07 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/06 16:53:27 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_parse			g_func[1] = {&ftfp_string};
 
-void	print_tokens(t_part *token, t_diarr *arr, va_list ap, int *n)
+void	print_tokens(t_part *token, t_darr *arr, va_list ap, int *n)
 {
 	va_list			cpy;
 	static char		*types = "s";
@@ -45,7 +45,7 @@ void	print_tokens(t_part *token, t_diarr *arr, va_list ap, int *n)
 **TODO: Modify this to have a function print out the proper thing
 */
 
-int		print_list(t_list *tokens, t_diarr *arr, va_list ap)
+int		print_list(t_list *tokens, t_darr *arr, va_list ap)
 {
 	t_gpart		*tmp;
 	int			n;
@@ -74,7 +74,7 @@ int		print_list(t_list *tokens, t_diarr *arr, va_list ap)
 int		ft_vprintf(const char *format, va_list ap)
 {
 	va_list	ask;
-	t_diarr	*dintarray;
+	t_darr	*dintarray;
 	t_list	*tokens;
 	int		i;
 	int		arg;
@@ -83,7 +83,7 @@ int		ft_vprintf(const char *format, va_list ap)
 	i = 0;
 	tokens = 0;
 	arg = 1;
-	dintarray = ftpf_diarrnew(10);
+	dintarray = ft_darrnew(10, sizeof(int));
 	while (format[i])
 	{
 		if (format[i] == '%')

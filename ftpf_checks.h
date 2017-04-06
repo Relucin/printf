@@ -17,5 +17,5 @@
 int		check_flags(const char **format, t_part *part);
 int		check_precision(const char **format, t_part *part);
 int		check_length(const char **format, t_part *part);
-int   check_numbers(const char **format, t_part *part, va_list ask, t_diarr * arr);
+int   check_numbers(const char **format, t_part *part, va_list ask, t_darr * arr);
 #endif

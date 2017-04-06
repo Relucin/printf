@@ -80,7 +80,7 @@ int		check_length(const char **format, t_part *part)
 	return (0);
 }
 
-int		check_numbers(const char **f, t_part *part, va_list ask, t_diarr *arr)
+int		check_numbers(const char **f, t_part *part, va_list ask, t_darr *arr)
 {
 	unsigned long long int result;
 

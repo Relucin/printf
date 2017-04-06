@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/01 23:35:39 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/03 22:34:46 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/06 16:54:55 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 ** TODO: Make new ft_lstnew because its hacky atm...
 */
 
-t_list	*make_part(const char **format, va_list ask, t_diarr *arr, int *arg)
+t_list	*make_part(const char **format, va_list ask, t_darr *arr, int *arg)
 {
 	t_gpart part;
 	t_part	*info;
 	t_list	*node;
 
 	node = ft_lstnew(&part, sizeof(&part));
-	ftpf_diarradd(arr, (arr->len) ? arr->array[arr->len - 1] + 1 : 0);
+	ft_darraddback(arr, (arr->len) ? arr->array[arr->len - 1] + 1 : 0);
 	info = malloc(sizeof(t_part));
 	info->flags = 0;
 	info->prec = 0;

@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/05 22:21:42 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/06 01:19:14 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/06 14:56:58 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 # include <stddef.h>
 # include <stdint.h>
 # include <stdlib.h>
-# define FT_DARRGET(a, i) (a->size == 1) ? (char)ft_dag(a, i) : D2(a, i)
-# define D2(a, i) (a->size == sizeof(short)) ? (short)ft_dag(a, i) : D3(a, i)
-# define D3(a, i) (a->size == 4) ? (int)ft_dag(a, i) : D4(a, i)
-# define D4(a, i) (a->size == 8) ? (long)ft_dag(a, i) : 0
+# define FT_DAGETINT(arr, i) (int)ft_dag(arr, i)
 
 typedef struct	s_darr
 {
