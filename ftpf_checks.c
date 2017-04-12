@@ -5,114 +5,109 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/29 16:50:14 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/04 14:53:24 by bmontoya         ###   ########.fr       */
+/*   Created: 2017/04/11 14:45:48 by bmontoya          #+#    #+#             */
+/*   Updated: 2017/04/11 14:56:10 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ftpf_printf.h"
 
-int		check_flags(const char **format, t_part *part)
+bool	ftpf_checknums(const char **format, va_list ap)
+{
+	uint64_t tmp;
+
+	if (**format == '*')
+	{
+		g_part.width = va_arg(ap, uint64_t);
+		return (true);
+	}
+	else if (ft_isdigit(**format))
+	{
+		tmp = 0;
+		while (ft_isdigit(**format))
+		{
+			tmp = (tmp * 10) + **format - '0';
+			++(*format);
+		}
+		if (**format == '$')
+		{
+			g_part.arg = tmp;
+			++(*format);
+		}
+		else
+			g_part.width = tmp;
+		return (true);
+	}
+	return (false);
+}
+
+bool	ftpf_checkprecision(const char **format, va_list ap)
+{
+	if (**format == '.')
+	{
+		g_part.p = 1;
+		++(*format);
+		if (**format == '*')
+		{
+			g_part.prec = va_arg(ap, uint64_t);
+			++(*format);
+		}
+		else
+		{
+			g_part.prec = 0;
+			while (ft_isdigit(**format))
+			{
+				g_part.prec *= 10;
+				g_part.prec += **format - '0';
+				++(*format);
+			}
+		}
+		return (true);
+	}
+	return (false);
+}
+
+bool	ftpf_checkflags(const char **format)
 {
 	static const char	*flags = "#0- +";
-	int					i;
+	uint8_t				i;
 
 	i = 0;
 	while (flags[i] && flags[i] != **format)
 		i++;
 	if (flags[i])
 	{
-		part->flags |= (1 << i);
-		(*format)++;
-		return (1);
+		g_part.flags |= (1 << i);
+		++(*format);
+		return (true);
 	}
-	return (0);
+	return (false);
 }
 
-int		check_precision(const char **format, t_part *part)
+bool	ftpf_checklength(const char **format)
 {
-	static const char	precision = '.';
+	static const char	*length = "hljzL";
+	int					i;
 
-	if (**format == precision)
-	{
-		part->prec = 1;
-		part->pmin = 0;
-		(*format)++;
-		return (1);
-	}
-	return (0);
-}
-
-/*
-** TODO: Do comparisions when figure out how to set t_part
-*/
-
-int		check_length(const char **format, t_part *part)
-{
-	static const char		*dlength = "hl";
-	static const char		*length = "jzL";
-	int						i;
-
-	i = 0;
-	while (dlength[i] && dlength[i] != **format)
-		i++;
-	if (dlength[i])
-	{
-		(*format)++;
-		if (**format == dlength[i])
-		{
-			part->length |= (i) ? ll : hh;
-			(*format)++;
-		}
-		else
-			part->length |= (i) ? l : h;
-		return (1);
-	}
 	i = 0;
 	while (length[i] && length[i] != **format)
 		i++;
 	if (length[i])
 	{
-		(*format)++;
-		part->length |= ((1 << 3) << (i + 1));
-		return (1);
-	}
-	return (0);
-}
-
-int		check_numbers(const char **f, t_part *part, va_list ask, t_darr *arr)
-{
-	unsigned long long int result;
-
-	result = 0;
-	while (ft_isdigit(**f))
-	{
-		result = (result * 10) + (**f - '0');
-		(*f)++;
-	}
-	if (!result && **f == '*')
-	{
-		(*f)++;
-		if (**f == '$')
+		++(*format);
+		if (i <= 1)
 		{
-			(*f)++;
-			return (1);
+			if (**format == length[i])
+			{
+				g_part.length |= (i) ? ll : hh;
+				++(*format);
+			}
+			else
+				g_part.length |= (i) ? l : h;
 		}
-		arr->array[arr->len - 1] += 1;
-		result = va_arg(ask, int);
-	}
-	if (result)
-	{
-		if (**f == '$')
-		{
-			part->arg = result;
-			(*f)++;
-		}
-		else if (part->prec)
-			part->pmin = result;
 		else
-			part->width = result;
-		return (1);
+			g_part.length |= ((1 << 3) << (i + 1));
+		return (true);
 	}
-	return (0);
+	return (false);
 }

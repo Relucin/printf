@@ -5,28 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/03 22:58:03 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/06 16:47:49 by bmontoya         ###   ########.fr       */
+/*   Created: 2017/04/11 16:26:49 by bmontoya          #+#    #+#             */
+/*   Updated: 2017/04/11 16:31:39 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ftpf_printf.h"
 
-void	ft_putnstr(char *str, int n)
-{
-	write(1, str, n);
-}
-
-void	print_padding(char p, int t)
-{
-	while (t)
-	{
-		write(1, &p, 1);
-		t--;
-	}
-}
-
-void	ftfp_wstring2(char *ret, wchar_t str)
+int		ftpf_wtos(char *ret, wchar_t str)
 {
 	int		i;
 
@@ -51,66 +37,58 @@ void	ftfp_wstring2(char *ret, wchar_t str)
 		ret[i++] = 0x80 | (str & 0x3F);
 	}
 	ret[i] = 0;
+	return (i);
 }
 
-/*
-** TODO: Free t_dcarr...
-*/
-
-char	*ftfp_wstring(va_list ap)
+char	*ftpf_wstos(wchar_t *str)
 {
-	wchar_t	*str;
-	t_darr	*tmp;
-	char	*ctmp;
-	int		i;
+	uint64_t	i;
+	char		*ret;
+	char		tmp[5];
 
-	ctmp = malloc(5);
-	tmp = ft_darrnew(30, sizeof(char));
-	str = va_arg(ap, wchar_t*);
+	i = 0;
+	while (str[i])
+		i++;
+	ret = malloc(sizeof(*ret) * ((i * 4) + 1));
+	ret[0] = '\0';
+	g_part.prec = (g_part.p) ? g_part.prec : i * 4;
+	g_part.p = 0;
 	while (*str)
 	{
-		ftfp_wstring2(ctmp, *str);
-		i = 0;
-		while (ctmp[i])
+		if (g_part.prec >= (i = ftpf_wtos(tmp, *str++)))
 		{
-			ft_darraddback(tmp, ctmp[i++]);
+			g_part.prec -= i;
+			ft_strcat(ret, tmp);
 		}
-		str++;
+		else
+			break ;
 	}
-	ft_darraddback(tmp, '\0');
-	free(ctmp);
-	ctmp = tmp->array;
-	free(tmp);
-	return (ctmp);
+	return (ret);
 }
 
-/*
-** Uses only - and 0
-*/
-
-void	ftfp_string(t_part *token, va_list ap, int *n)
+char	*ftpf_string(int *len, va_list ap)
 {
-	char	*str;
-	char	spacing;
+	char		*aps;
+	char		*tmp;
+	uint64_t	strl;
+	va_list	dap;
 
-	(void)n;
-	if (token->length & l)
-		str = ftfp_wstring(ap);
+	if (g_part.arg)
+	{
+		va_copy(dap, ap);
+		while (--g_part.arg)
+			(void)va_arg(dap, void *);
+		aps = va_arg(dap, char *);
+		va_end(dap);
+	}
 	else
-		str = va_arg(ap, char*);
-	spacing = (token->flags & ZER) ? '0' : ' ';
-	str = (str) ? str : "(null)";
-	token->pmin = (token->prec) ? token->pmin : ft_strlen(str);
-	token->pmin = (token->pmin > ft_strlen(str)) ? ft_strlen(str) : token->pmin;
-	if (token->width >= token->pmin)
-		token->width = token->width - token->pmin;
-	else
-		token->width = 0;
-	if (!(token->flags & NEG))
-		print_padding(spacing, token->width);
-	ft_putnstr(str, token->pmin);
-	if (token->flags & NEG)
-		print_padding(spacing, token->width);
-	if (token->length & l)
-		free(str);
+		aps = va_arg(ap, char *);
+	if (g_part.length & l)
+		aps = ftpf_wstos((wchar_t*)aps);
+	strl = (g_part.p) ? g_part.prec : ft_strlen(aps);
+	*len += strl;
+	tmp = ft_strsub(aps, 0, strl);
+	if (g_part.width > strl)
+		return(ftpf_pad(tmp, len, strl));
+	return (tmp);
 }

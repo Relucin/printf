@@ -5,56 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/03/21 14:37:19 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/06 16:49:46 by bmontoya         ###   ########.fr       */
+/*   Created: 2017/04/11 14:38:34 by bmontoya          #+#    #+#             */
+/*   Updated: 2017/04/11 14:40:53 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-# include "libft.h"
-# include "ft_darray.h"
-# include "wchar.h"
 # include <stdarg.h>
 
-typedef enum		e_flag
-{
-	ALT = 1,
-	ZER = 2,
-	NEG = 4,
-	SPC = 8,
-	PLS = 16
-}					t_flag;
-
-typedef enum		e_length
-{
-	hh = 1,
-	h = 2,
-	l = 4,
-	ll = 8,
-	j = 16,
-	z = 32,
-	L = 64
-}					t_length;
-
-typedef struct		s_gpart
-{
-	unsigned char	prec : 1;
-	void			*data;
-}					t_gpart;
-
-typedef struct		s_part
-{
-	unsigned char	flags;
-	unsigned char	prec : 1;
-	size_t			arg;
-	size_t			width;
-	size_t			pmin;
-	size_t			length;
-	char			type;
-}					t_part;
-
-typedef void		(*t_parse)(t_part *, va_list, int *);
-int					ft_printf(const char *format, ...);
-void				ftfp_string(t_part *token, va_list ap, int *n);
+int		ft_printf(const char *format, ...);
+int		ft_vprintf(const char *format, va_list ap);
+int		ft_asprintf(char **ret, const char *format, ...);
+int		ft_vasprintf(char **ret, const char *format, va_list ap);
 #endif

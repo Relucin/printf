@@ -1,11 +1,10 @@
 INCLUDES = ft_printf.o \
-						ftpf_checks.o \
-						ftpf_makeparts.o \
-						ftpf_strings.o \
-						ft_darray.o \
-						main.o
+			ftpf_checks.o \
+			ftpf_helpers.o \
+			ftpf_strings.o \
+			main.o
 FLAGS 	 = -Llibft -lft
-FLAGS2	 = -Ilibft -I. -Wall -Wextra -Werror
+FLAGS2	 = -Ilibft -I. -Wall -Wextra
 NAME		 = main
 
 all: $(NAME)
