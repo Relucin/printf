@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 15:01:20 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/11 20:07:18 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/13 01:23:07 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*ft_ultoa_base(uint64_t nbr, int base)
 		++length;
 	ret = malloc(sizeof(*ret) * (length + 1));
 	ret[length--] = '\0';
-	if	(!nbr)
+	if (!nbr)
 		ret[0] = '0';
 	while (nbr)
 	{
@@ -86,32 +86,153 @@ char	*ft_ultoa_base(uint64_t nbr, int base)
 	return (ret);
 }
 
-char	*ftpf_pointer(int *len, va_list ap)
+char	*ft_ltoa_10(int64_t nbr)
 {
-	char		*tmp;
-	char		*ret;
-	size_t		slen;
+	char	*tmp;
+	char	*ret;
+	char	l[2];
 
-	tmp = ft_ultoa_base(va_arg(ap, uint64_t), 16);
-	slen = ft_strlen(tmp) + 2;
+	if (nbr >= 0)
+		return (ft_ultoa_base(nbr, 10));
+	l[0] = ((nbr % 10) * -1) + '0';
+	l[1] = '\0';
+	nbr = (nbr / 10) * -1;
+	if (nbr)
+	{
+		tmp = ft_ultoa_base(nbr, 10);
+		ret = malloc(ft_strlen(tmp) + 3);
+		ft_strcpy(ret, "-");
+		ft_strcat(ret, tmp);
+		free(tmp);
+	}
+	else
+	{
+		ret = malloc(3);
+		ft_strcpy(ret, "-");
+	}
+	ft_strcat(ret, l);
+	return (ret);
+}
+
+void	ftpf_converter(char c)
+{
+	if (c == 'D' || c == 'O' || c == 'U' || c == 'C' || c == 'S')
+	{
+		g_part.length |= l;
+		c += 32;
+		g_part.type = c;
+	}
+	if (c == 'p')
+	{
+		g_part.flags |= ALT;
+		c = 'x';
+	}
+	if (c == 'd' || c == 'i' || c == 'o' || c == 'u' || c == 'x' || c == 'X')
+	{
+		if (c == 'd' || c == 'i' || c == 'u')
+		{
+			if (c == 'u')
+				g_part.length |= z;
+			g_part.base = 10;
+		}
+		else if (c == 'o')
+			g_part.base = 8;
+		else
+		{
+			if (c == 'X')
+				g_part.flags |= X;
+			g_part.base = 16;
+		}
+		g_part.type = 'i';
+	}
+	else
+		g_part.type = c;
+}
+
+char	*ftpf_noarg(char c, int *len)
+{
+	char	*ret;
+
+	ret = malloc(2);
+	if (!c)
+	{
+		ret[0] = '\0';
+		return (ret);
+	}
+	ret[0] = c;
+	ret[1] = '\0';
+	*len += 1;
+	if (g_part.width > 1)
+		return (ftpf_pad(ret, len, 1));
+	return (ret);
+}
+
+void	ft_strupper(char *str)
+{
+	while (*str)
+	{
+		if (*str >= 'a' && *str <= 'z')
+			*str -= 32;
+		str++;
+	}
+}
+
+char	*ftpf_alt(char *str, int *len, size_t *slen)
+{
+	char	*ret;
+	uint8_t	alen;
+
+	if (g_part.base == 8 || g_part.base == 16)
+	{
+		alen = g_part.base / 8;
+		*len += alen;
+		*slen += alen;
+		ret = malloc(ft_strlen(str) + alen + 1);
+		if (alen == 1)
+			ft_strcpy(ret, "0");
+		else
+			ft_strcpy(ret, "0x");
+		ft_strcat(ret, str);
+		free(str);
+		return (ret);
+	}
+	return (str);
+}
+
+char	*ftpf_ints(int *len, va_list ap)
+{
+	char	*ret;
+	size_t	slen;
+
+	if (g_part.base == 10 && !(g_part.length & z))
+	{
+		if (g_part.length & z)
+			ft_putendl("?");
+		if (g_part.length & (l | ll | j))
+			ret = ft_ltoa_10(va_arg(ap, int64_t));
+		else
+			ret = ft_ltoa_10(va_arg(ap, int32_t));
+	}
+	else
+		ret = ft_ultoa_base(va_arg(ap, uint64_t), g_part.base);
+	slen = ft_strlen(ret);
 	*len += slen;
-	ret = malloc(slen + 1);
-	ft_strcpy(ret, "0x");
-	ft_strcat(ret, tmp);
-	free(tmp);
+	if (g_part.flags & ALT)
+		ret = ftpf_alt(ret, len, &slen);
+	if (g_part.flags & X)
+		ft_strupper(ret);
 	if (g_part.flags & ZER)
 		g_part.flags ^= ZER;
 	if (g_part.width > slen)
-		return(ftpf_pad(ret, len, slen));
-	else
-		return (ret);
+		return (ftpf_pad(ret, len, slen));
+	return (ret);
 }
 
-t_parse	g_func[3] = {&ftpf_string, &ftpf_string, &ftpf_pointer};
+t_parse	g_func[2] = {&ftpf_string, &ftpf_ints};
 
 char	*ftpf_getstr(const char **format, int *len, va_list ap)
 {
-	static char	*types = "sSp";
+	static char	*types = "si";
 	uint8_t		i;
 
 	i = 0;
@@ -123,16 +244,15 @@ char	*ftpf_getstr(const char **format, int *len, va_list ap)
 					if (!ftpf_checklength(format))
 						break ;
 	}
-	//TODO: Make a converter function
-	if (**format == 'C' || **format == 'S')
-		g_part.length |= l;
-	while (types[i] && types[i] != **format)
+	ftpf_converter(**format);
+	while (types[i] && types[i] != g_part.type)
 		i++;
-	++(*format);
+	if (**format)
+		++(*format);
 	if (types[i])
-		return(g_func[i](len, ap));
+		return (g_func[i](len, ap));
 	else
-		return(0);
+		return (ftpf_noarg(g_part.type, len));
 }
 
 //TODO: This might only really be for strings??

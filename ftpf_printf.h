@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:41:27 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/11 19:35:08 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/12 21:30:01 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef enum	e_flag
 	ZER = 2,
 	NEG = 4,
 	SPC = 8,
-	PLS = 16
+	PLS = 16,
+	X = 32
 }				t_flag;
 
 typedef struct	s_part
@@ -45,6 +46,7 @@ typedef struct	s_part
 	uint8_t		flags;
 	uint8_t		p;
 	uint8_t		length;
+	uint8_t		base;
 	char		type;
 }				t_part;
 

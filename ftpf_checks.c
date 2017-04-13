@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:45:48 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/11 14:56:10 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/13 01:31:34 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ bool	ftpf_checkflags(const char **format)
 
 bool	ftpf_checklength(const char **format)
 {
-	static const char	*length = "hljzL";
+	static const char	*length = "hljz";
 	int					i;
 
 	i = 0;
@@ -106,7 +106,7 @@ bool	ftpf_checklength(const char **format)
 				g_part.length |= (i) ? l : h;
 		}
 		else
-			g_part.length |= ((1 << 3) << (i + 1));
+			g_part.length |= (j << (i - 2));
 		return (true);
 	}
 	return (false);

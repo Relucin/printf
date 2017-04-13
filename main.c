@@ -6,14 +6,16 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 21:00:17 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/11 18:39:44 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/13 01:37:37 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <locale.h>
 #include <stdio.h>
+#include <limits.h>
 #include <libft.h>
+#include <inttypes.h>
 #include <strings.h>
 
 int		ft_vasprintf(char **ret, const char *format, va_list ap);
@@ -37,6 +39,7 @@ void	test(char *format, ...)
 	iret2 = vasprintf(&ret2, format, cap);
 	if (strcmp(ret1, ret2))
 	{
+		ft_putendl("");
 		ft_putstr(format);
 		ft_putstr(ret1);
 		ft_putstr(ret2);
@@ -52,7 +55,7 @@ void	test(char *format, ...)
 		errors += 1;
 	}
 	if (!errors)
-		ft_putendl("Correct!");
+		ft_putchar('.');
 	else
 		ft_putendl("------------");
 	free(ret1);
@@ -71,6 +74,16 @@ int	main(void)
 	test("%-.*10s\n", 2, "Hello");
 	test("%0-.*10s\n", 2, "Hello");
 	test("%0.*10s\n", 2, "Hello");
+	test("%%\n");
+	test("%.%\n");
+	test("%10.%\n");
+	test("%1.%\n");
+	test("%2.%\n");
+	test("%2.3%\n");
+	test("%-10.%\n");
+	test("%-10.r\n");
+	test("%-10.");
+	test("%-10.👩");
 	test("%p\n", &c);
 	test("%p\n", 0);
 	test("%.3p\n", &c);
@@ -78,7 +91,38 @@ int	main(void)
 	test("%020.3p\n", &c);
 	test("%-020.3p\n", &c);
 	test("%s %p\n", "Hello", &c);
+	test("");
+	test("%d\n", 10);
+	test("%d\n", -10);
+	test("%hhd\n", 'j');
+	test("%hho\n", 'j');
+	test("%hhx\n", 'j');
+	test("%hhX\n", 'j');
+	test("%llX\n", (intmax_t)~0);
+	test("%jX\n", (intmax_t)~0);
+	test("%d\n", (int)~0);
+	test("%#X\n", 16);
+	test("%#x\n", 16);
+	test("%#o\n", 16);
+	test("%#O\n", 16);
+	test("%#d\n", 16);
+	test("%020.3x\n", 1231);
+	test("%-020.3x\n", 1231);
+	test("%-020x\n", 1231);
+	test("%d\n", INT_MIN);
+	test("%d\n", INT_MAX);
+	test("%u\n", UINT_MAX);
+	test("%zd\n", UINT_MAX);
+	test("%ld\n", LONG_MIN);
+	test("%ld\n", LONG_MAX);
+	test("%d\n", LONG_MAX);
+	test("%hhd\n", LONG_MAX);
+	test("%lu\n", ULONG_MAX);
+	test("%jd\n", INTMAX_MAX);
+	test("%ju\n", UINTMAX_MAX);
 	setlocale(LC_ALL, "");
+	test("%-10.👩");
+	test("%-10.👩d");
 	test("%ls\n", L"Hello");
 	test("%ls\n", L"👩🏽‍🚒");
 	test("%.3ls\n", L"👩🏽‍🚒");

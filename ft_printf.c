@@ -6,13 +6,13 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 19:02:46 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/11 15:15:57 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/12 21:15:38 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftpf_printf.h"
 
-int	ft_countrep(const char *str, char c)
+int		ft_countrep(const char *str, char c)
 {
 	int count;
 
@@ -39,8 +39,9 @@ int		ft_vasprintf(char **ret, const char *format, va_list ap)
 	parts = malloc(sizeof(*parts) * (args * 2 + 2));
 	phold = parts;
 	len = ftpf_parse(parts, format, ap);
-	if(!(*ret = malloc(len + 1)))
+	if (!(*ret = malloc(len + 1)))
 		return (-1);
+	*ret[0] = '\0';
 	while (*parts)
 	{
 		ft_strlcat(*ret, *parts, len + 1);
@@ -69,6 +70,7 @@ int		ft_vprintf(const char *format, va_list ap)
 
 	iret = ft_vasprintf(&cret, format, ap);
 	ft_putstr(cret);
+	free(cret);
 	return (iret);
 }
 
