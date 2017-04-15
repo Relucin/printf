@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:41:27 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/12 21:30:01 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/13 14:09:52 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,11 @@ typedef struct	s_part
 	char		type;
 }				t_part;
 
+//TODO: These need to be placed into libft eventually...
+char			*ft_ltoa_10(int64_t nbr);
+char			*ft_ultoa_base(uint64_t nbr, int base);
+void			ft_strupper(char *str);
+
 typedef char	*(*t_parse)(int *, va_list);
 t_part			g_part;
 bool			ftpf_checknums(const char **format, va_list ap);
@@ -59,6 +64,10 @@ bool			ftpf_checklength(const char **format);
 
 char			*ftpf_string(int *len, va_list ap);
 char			*ftpf_wstos(wchar_t *str);
+
+// char			*ftpf_intflags(char *str, int *len, size_t *slen);
+// char			*ftpf_ints(int *len, va_list ap);
+// char			*ftpf_alt(char *str, int *len, size_t *slen);
 //TODO: Figure out how to split this up better?
 void			ftpf_resetpart(void);
 int				ftpf_parse(char **parts, const char *format, va_list ap);

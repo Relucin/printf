@@ -2,16 +2,19 @@ INCLUDES = ft_printf.o \
 			ftpf_checks.o \
 			ftpf_helpers.o \
 			ftpf_strings.o \
-			main.o
-FLAGS 	 = -Llibft -lft
-FLAGS2	 = -Ilibft -I. -Wall -Wextra
-NAME		 = main
+			ftpf_numbers.o
 
-all: $(NAME)
+FLAGS 	 = -Llibft -lft -L. -lftprintf
+FLAGS2	 = -Ilibft -I. -Wall -Wextra -g
+NAME	 = libftprintf.a
 
 $(NAME): $(INCLUDES)
 	make -C libft
-	gcc $(FLAGS2) $(FLAGS) $(INCLUDES) -o $@
+	ar rc $@ libft/*.o $^
+
+main: $(NAME) main.o
+	make -C libft
+	gcc $(FLAGS2) $(FLAGS) main.o -o $@
 
 %.o: %.c
 	gcc $(FLAGS2) -c $^ -o $@
@@ -23,3 +26,7 @@ clean:
 fclean: clean
 	rm -rf $(NAME)
 	make -C libft fclean
+
+re: fclean all
+
+all: $(NAME)
