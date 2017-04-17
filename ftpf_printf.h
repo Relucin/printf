@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:41:27 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/13 14:09:52 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/15 21:58:12 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ typedef enum	e_flag
 	X = 32
 }				t_flag;
 
+typedef struct	s_string
+{
+	char		*str;
+	size_t		len;
+}				t_string;
+
 typedef struct	s_part
 {
 	uint64_t	width;
@@ -47,6 +53,7 @@ typedef struct	s_part
 	uint8_t		p;
 	uint8_t		length;
 	uint8_t		base;
+	size_t		len;
 	char		type;
 }				t_part;
 
@@ -55,23 +62,24 @@ char			*ft_ltoa_10(int64_t nbr);
 char			*ft_ultoa_base(uint64_t nbr, int base);
 void			ft_strupper(char *str);
 
-typedef char	*(*t_parse)(int *, va_list);
+typedef char	*(*t_parse)(size_t *, va_list);
 t_part			g_part;
 bool			ftpf_checknums(const char **format, va_list ap);
 bool			ftpf_checkprecision(const char **format, va_list ap);
 bool			ftpf_checkflags(const char **format);
 bool			ftpf_checklength(const char **format);
 
-char			*ftpf_string(int *len, va_list ap);
+char			*ftpf_string(size_t *len, va_list ap);
 char			*ftpf_wstos(wchar_t *str);
+int				ftpf_wtos(char *ret, wchar_t str);
 
 // char			*ftpf_intflags(char *str, int *len, size_t *slen);
 // char			*ftpf_ints(int *len, va_list ap);
 // char			*ftpf_alt(char *str, int *len, size_t *slen);
 //TODO: Figure out how to split this up better?
 void			ftpf_resetpart(void);
-int				ftpf_parse(char **parts, const char *format, va_list ap);
-char			*ftpf_gspart(const char **format, int *len, int *plen);
-char			*ftpf_getstr(const char **format, int *len, va_list ap);
-char			*ftpf_pad(char *str, int *len, size_t strl);
+int				ftpf_parse(t_string **parts, const char *format, va_list ap);
+char			*ftpf_gspart(const char **format, size_t *len, int *plen);
+char			*ftpf_getstr(const char **format, size_t *len, va_list ap);
+char			*ftpf_pad(char *str, size_t *len, size_t strl);
 #endif

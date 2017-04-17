@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 19:02:46 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/12 21:15:38 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/15 22:16:17 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,24 @@ int		ft_countrep(const char *str, char c)
 
 int		ft_vasprintf(char **ret, const char *format, va_list ap)
 {
-	char	**parts;
-	char	**phold;
-	int		args;
-	int		len;
+	t_string	**parts;
+	t_string	**phold;
+	char		*tret;
+	int			len;
 
 	ftpf_resetpart();
-	args = ft_countrep(format, '%');
-	parts = malloc(sizeof(*parts) * (args * 2 + 2));
+	len = ft_countrep(format, '%');
+	parts = malloc(sizeof(*parts) * (len * 2 + 2));
 	phold = parts;
 	len = ftpf_parse(parts, format, ap);
-	if (!(*ret = malloc(len + 1)))
+	if (!(tret = ft_strnew(len)))
 		return (-1);
-	*ret[0] = '\0';
+	*ret = tret;
 	while (*parts)
 	{
-		ft_strlcat(*ret, *parts, len + 1);
+		ft_strncpy(tret, (*parts)->str, (*parts)->len);
+		tret += (*parts)->len;
+		// ft_strlcat(*ret, (*parts)->str, len + 1);
 		free(*parts);
 		parts++;
 	}

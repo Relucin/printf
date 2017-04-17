@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 15:01:20 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/14 22:36:46 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/15 22:10:17 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,21 @@ void	ftpf_resetpart(void)
 	g_part.length = 0;
 }
 
-int		ftpf_parse(char **parts, const char *format, va_list ap)
+t_string	*ftpf_addtstr(char *str, size_t len)
+{
+	t_string *new;
+
+	new = malloc(sizeof(t_string));
+	new->str = str;
+	new->len = len;
+	return (new);
+}
+
+int		ftpf_parse(t_string **parts, const char *format, va_list ap)
 {
 	int		i;
-	int		len;
+	char	*tmp;
+	size_t	len;
 
 	i = 0;
 	len = 0;
@@ -99,27 +110,35 @@ int		ftpf_parse(char **parts, const char *format, va_list ap)
 		if (format[i] == '%')
 		{
 			if (i > 0)
-				*parts++ = ftpf_gspart(&format, &len, &i);
+			{
+				tmp = ftpf_gspart(&format, &len, &i);
+				*parts++ = ftpf_addtstr(tmp, g_part.len);
+			}
 			format++;
-			*parts++ = ftpf_getstr(&format, &len, ap);
+			tmp = ftpf_getstr(&format, &len, ap);
+			*parts++ = ftpf_addtstr(tmp, g_part.len);
 			ftpf_resetpart();
 		}
 		if (format[i] && format[i] != '%')
 			++i;
 	}
 	if (i)
-		*parts++ = ftpf_gspart(&format, &len, &i);
+	{
+		tmp = ftpf_gspart(&format, &len, &i);
+		*parts++ = ftpf_addtstr(tmp, g_part.len);
+	}
 	*parts = 0;
 	return (len);
 }
 
-char	*ftpf_gspart(const char **format, int *len, int *plen)
+char	*ftpf_gspart(const char **format, size_t *len, int *plen)
 {
 	char *str;
 
 	str = ft_strsub(*format, 0, *plen);
 	*len += *plen;
 	(*format) += *plen;
+	g_part.len = *plen;
 	*plen = 0;
 	return (str);
 }
@@ -152,32 +171,40 @@ void	ftpf_converter(char c)
 	}
 }
 
-char	*ftpf_noarg(char c, int *len)
+char	*ftpf_noarg(char c, size_t *len)
 {
 	char	*ret;
 
 	ret = malloc(2);
 	if (!c)
 	{
+		g_part.len = 0;
 		ret[0] = '\0';
 		return (ret);
 	}
 	ret[0] = c;
 	ret[1] = '\0';
 	*len += 1;
+	g_part.len = 1;
 	if (g_part.width > 1)
 		return (ftpf_pad(ret, len, 1));
 	return (ret);
 }
 
-char	*ftpf_chars(int *len, va_list ap)
+char	*ftpf_chars(size_t *len, va_list ap)
 {
 	char	*ret;
 
 	ret = malloc(5);
-	ret[0] = (char)va_arg(ap, int);
-	ret[1] = '\0';
-	*len += 1;
+	if (g_part.length & l)
+		g_part.len = ftpf_wtos(ret, va_arg(ap, wchar_t));
+	else
+	{
+		ret[0] = (char)va_arg(ap, int);
+		ret[1] = '\0';
+		g_part.len = 1;
+	}
+	*len += g_part.len;
 	if (g_part.width > 1)
 		return (ftpf_pad(ret, len, 1));
 	return (ret);
@@ -192,7 +219,7 @@ void	ft_strcatmulti(char *s1, char *s2, uint64_t times)
 	}
 }
 
-void	ftpf_signedmods(char **str, int *tlen, size_t len)
+void	ftpf_signedmods(char **str, size_t *tlen, size_t len)
 {
 	char	*tmp;
 
@@ -216,9 +243,10 @@ void	ftpf_signedmods(char **str, int *tlen, size_t len)
 		*str = tmp;
 	}
 	*tlen += len;
+	g_part.len = len;
 }
 
-char	*ftpf_signed(int *len, va_list ap)
+char	*ftpf_signed(size_t *len, va_list ap)
 {
 	char	*ret;
 	size_t	slen;
@@ -247,21 +275,20 @@ char	*ftpf_signed(int *len, va_list ap)
 	return (ret);
 }
 
-char	*ftpf_pointer(int *len, va_list ap)
+char	*ftpf_pointer(size_t *len, va_list ap)
 {
 	char	*ret;
 	char	*tmp;
-	size_t	slen;
 
 	ret = ft_ultoa_base(va_arg(ap, uint64_t), 16);
 	if (*ret == '0' && g_part.p)
 		*ret = '\0';
-	slen = ft_strlen(ret);
-	g_part.prec -= (g_part.prec > slen) ? slen : g_part.prec;
-	slen += g_part.prec + 2;
-	g_part.width -= (g_part.width > slen) ? slen : g_part.width;
-	slen += g_part.width;
-	tmp = ft_strnew(slen);
+	g_part.len = ft_strlen(ret);
+	g_part.prec -= (g_part.prec > g_part.len) ? g_part.len : g_part.prec;
+	g_part.len += g_part.prec + 2;
+	g_part.width -= (g_part.width > g_part.len) ? g_part.len : g_part.width;
+	g_part.len += g_part.width;
+	tmp = ft_strnew(g_part.len);
 	if (!(g_part.flags & NEG) && g_part.width)
 		ft_strcatmulti(tmp, " ", g_part.width);
 	ft_strcat(tmp, "0x");
@@ -270,11 +297,11 @@ char	*ftpf_pointer(int *len, va_list ap)
 	if ((g_part.flags & NEG) && g_part.width)
 		ft_strcatmulti(tmp, " ", g_part.width);
 	free(ret);
-	*len += slen;
+	*len += g_part.len;
 	return (tmp);
 }
 
-void	ftpf_unsignedmods(char **str, int *tlen, size_t len)
+void	ftpf_unsignedmods(char **str, size_t *tlen, size_t len)
 {
 	char	*tmp;
 
@@ -316,9 +343,10 @@ void	ftpf_unsignedmods(char **str, int *tlen, size_t len)
 	free(*str);
 	*str = tmp;
 	*tlen += len;
+	g_part.len = len;
 }
 
-char	*ftpf_unsigned(int *len, va_list ap)
+char	*ftpf_unsigned(size_t *len, va_list ap)
 {
 	char	*ret;
 	size_t	slen;
@@ -343,7 +371,7 @@ char	*ftpf_unsigned(int *len, va_list ap)
 t_parse	g_ftpffuncs[5] = {&ftpf_string, &ftpf_chars, &ftpf_signed,
 						&ftpf_pointer, &ftpf_unsigned};
 
-char	*ftpf_getstr(const char **format, int *len, va_list ap)
+char	*ftpf_getstr(const char **format, size_t *len, va_list ap)
 {
 	static char	*types = "scdpu";
 	uint8_t		i;
@@ -370,7 +398,7 @@ char	*ftpf_getstr(const char **format, int *len, va_list ap)
 
 //TODO: This might only really be for strings??
 
-char	*ftpf_pad(char *str, int *len, size_t strl)
+char	*ftpf_pad(char *str, size_t *len, size_t strl)
 {
 	char	*tmp;
 	char	*thold;
@@ -383,6 +411,7 @@ char	*ftpf_pad(char *str, int *len, size_t strl)
 	thold = tmp;
 	g_part.width -= strl;
 	*len += g_part.width;
+	g_part.len += g_part.width;
 	if (g_part.flags & NEG)
 		while (*str)
 			*tmp++ = *str++;

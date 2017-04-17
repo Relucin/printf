@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 16:26:49 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/13 11:29:33 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/15 22:10:57 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*ftpf_wstos(wchar_t *str)
 	return (ret);
 }
 
-char	*ftpf_string(int *len, va_list ap)
+char	*ftpf_string(size_t *len, va_list ap)
 {
 	char		*aps;
 	char		*tmp;
@@ -94,6 +94,7 @@ char	*ftpf_string(int *len, va_list ap)
 	strl = ft_strlen(aps);
 	strl = (g_part.p && strl > g_part.prec) ? g_part.prec : strl;
 	*len += strl;
+	g_part.len = strl;
 	tmp = ft_strsub(aps, 0, strl);
 	if (g_part.length & l)
 		free(aps);
