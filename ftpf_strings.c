@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 16:26:49 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/15 22:10:57 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:37:25 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ftpf_wtos(char *ret, wchar_t str)
 	int		i;
 
 	i = 0;
-	if (str < (1 << 7))
+	if (str <= 0x7f)
 		ret[i++] = str;
 	else
 	{
