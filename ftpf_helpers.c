@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 15:01:20 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/15 22:10:17 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:22:43 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,9 +191,19 @@ char	*ftpf_noarg(char c, size_t *len)
 	return (ret);
 }
 
+void	ft_strcatmulti(char *s1, char *s2, uint64_t times)
+{
+	while (times)
+	{
+		ft_strcat(s1, s2);
+		--times;
+	}
+}
+
 char	*ftpf_chars(size_t *len, va_list ap)
 {
 	char	*ret;
+	char	*tmp;
 
 	ret = malloc(5);
 	if (g_part.length & l)
@@ -205,18 +215,26 @@ char	*ftpf_chars(size_t *len, va_list ap)
 		g_part.len = 1;
 	}
 	*len += g_part.len;
-	if (g_part.width > 1)
-		return (ftpf_pad(ret, len, 1));
-	return (ret);
-}
-
-void	ft_strcatmulti(char *s1, char *s2, uint64_t times)
-{
-	while (times)
+	g_part.width -= (g_part.width > g_part.len) ? g_part.len : g_part.width;
+	if (g_part.width)
 	{
-		ft_strcat(s1, s2);
-		--times;
+		tmp = ft_strnew(g_part.len + g_part.width);
+		if (!(g_part.flags & NEG))
+		{
+			ft_strcatmulti(tmp, (g_part.flags & ZER) ? "0" : " ", g_part.width);
+			ft_memcpy(tmp + g_part.width, ret, g_part.len);
+		}
+		else
+		{
+			ft_memcpy(tmp, ret, g_part.len);
+			ft_strcatmulti(tmp + g_part.len, " ", g_part.width);
+		}
+		g_part.len += g_part.width;
+		*len += g_part.width;
+		free(ret);
+		return (tmp);
 	}
+	return (ret);
 }
 
 void	ftpf_signedmods(char **str, size_t *tlen, size_t len)
@@ -289,12 +307,14 @@ char	*ftpf_pointer(size_t *len, va_list ap)
 	g_part.width -= (g_part.width > g_part.len) ? g_part.len : g_part.width;
 	g_part.len += g_part.width;
 	tmp = ft_strnew(g_part.len);
-	if (!(g_part.flags & NEG) && g_part.width)
+	if (!(g_part.flags & (NEG | ZER)) || (!(g_part.flags & NEG) && g_part.p))
 		ft_strcatmulti(tmp, " ", g_part.width);
 	ft_strcat(tmp, "0x");
+	if ((g_part.flags & ZER) && !(g_part.flags & NEG) && !g_part.p)
+		ft_strcatmulti(tmp, "0", g_part.width);
 	ft_strcatmulti(tmp, "0", g_part.prec);
 	ft_strcat(tmp, ret);
-	if ((g_part.flags & NEG) && g_part.width)
+	if ((g_part.flags & NEG))
 		ft_strcatmulti(tmp, " ", g_part.width);
 	free(ret);
 	*len += g_part.len;
@@ -310,6 +330,8 @@ void	ftpf_unsignedmods(char **str, size_t *tlen, size_t len)
 		**str = '\0';
 		--len;
 	}
+	g_part.prec -= (g_part.prec > len) ? len : g_part.prec;
+	len += g_part.prec;
 	if (g_part.flags & ALT)
 	{
 		if (g_part.base == 8)
@@ -317,20 +339,13 @@ void	ftpf_unsignedmods(char **str, size_t *tlen, size_t len)
 		else if (g_part.base == 16)
 			len += 2;
 	}
-	g_part.prec -= (g_part.prec > len) ? len : g_part.prec;
-	len += g_part.prec;
 	g_part.width -= (g_part.width > len) ? len : g_part.width;
 	len += g_part.width;
 	tmp = ft_strnew(len);
 	if (!(g_part.flags & (NEG | ZER)) && g_part.width)
 			ft_strcatmulti(tmp, " ", g_part.width);
 	if (g_part.flags & ALT)
-	{
-		if (g_part.base == 8)
-			ft_strcat(tmp, "0");
-		else if (g_part.base == 16)
-			ft_strcat(tmp, "0x");
-	}
+		ft_strcat(tmp, "0x");
 	if ((g_part.flags & ZER) && !(g_part.flags & NEG) && g_part.width)
 		ft_strcatmulti(tmp, "0", g_part.width);
 	if (g_part.prec)
@@ -360,9 +375,16 @@ char	*ftpf_unsigned(size_t *len, va_list ap)
 	else
 		ret = ft_ultoa_base(va_arg(ap, uint32_t), g_part.base);
 	slen = ft_strlen(ret);
+	if (g_part.base == 8 && (g_part.flags & ALT))
+	{
+		g_part.flags ^= ALT;
+		++g_part.p;
+		g_part.prec = (g_part.prec > slen) ? g_part.prec : slen + 1;
+		g_part.prec -= (*ret == '0') ? 1 : 0;
+	}
 	if ((g_part.flags & ZER) && ((g_part.flags & NEG) || g_part.p))
 		g_part.flags ^= ZER;
-	if ((g_part.flags & ALT) && *ret == '0' && g_part.base != 8)
+	if ((g_part.flags & ALT) && *ret == '0')
 		g_part.flags ^= ALT;
 	ftpf_unsignedmods(&ret, len, slen);
 	return (ret);

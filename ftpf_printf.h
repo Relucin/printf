@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:41:27 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/15 21:58:12 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/17 19:38:12 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct	s_string
 
 typedef struct	s_part
 {
-	uint64_t	width;
-	uint64_t	prec;
+	int			width;
+	int			prec;
 	uint64_t	arg;
 	uint8_t		flags;
 	uint8_t		p;

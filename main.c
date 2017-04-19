@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 21:00:17 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/15 23:18:17 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/18 17:31:35 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,14 @@ void	test(char *format, ...)
 		ft_putchar('.');
 	else
 		ft_putendl("------------");
+	va_end(ap);
+	va_end(cap);
 	free(ret1);
 	free(ret2);
 }
 
 int	main(void)
 {
-	char c = 'a';
 	// test("%s", "Hello");
 	// test("%s %s", "Hello", "World");
 	// test("%2$s %1$s", "Hello", "World");
@@ -101,13 +102,27 @@ int	main(void)
 	// test("%%%%");
 	// test("%s", 0);
 	// test("%.4s", "42");
+	//Wild
+	// ft_putendl("---*---");
+	// test("%*d", 5, 42);
+	// test("%*d", -5, 42);
+	// test("%.*d", -5, 42);
+	// test("%05.*d", -15, 42);
+	// test("{%*c}", -15, 0);
+	// test("{%.*s}", 0, "42");
+	// test("{%.*s}", -5, "42");
+	// test("{%.15c}", -15, 0);
 	//C
-	// ft_putendl("---C---");
+	// ft_putendl("\n---C---");
+	// test("null %c and text", 0);
+	printf("null %c and text\n", 0);
+	ft_printf("null %c and text\n", 0);
 	// test("%03c", 0);
 	// test("{% c}", 0);
 	// test("{%3c}", 0);
-	// //U
+	// U
 	// ft_putendl("\n---U---");
+	// test("{%#.5x}", 1);
 	// test("%zu", ULLONG_MAX);
 	// test("%hlu", 4294967296);
 	// test("%hU", 4294967296);
@@ -148,8 +163,14 @@ int	main(void)
 	// test("% u", 9999);
 	// test("%030x", 0xFFFF);
 	// test("%#08x", 42);
+	// test("%#.3o", 1);
 	// //P
+	// char c = 'a';
 	// ft_putendl("\n---P---");
+	// test("{%05p}", 0);
+	// test("{%5p}", 0);
+	// test("{%3*p}", 10, 0);
+	// test("{%-05p}", 0);
 	// test("%p", &c);
 	// test("%p", 0);
 	// test("%.5p", 0);
@@ -206,16 +227,15 @@ int	main(void)
 	// test("%-+ 010d", 10);
 	// //wchar_t
 	// ft_putendl("\n--wide--");
-	setlocale(LC_ALL, "");
+	// setlocale(LC_ALL, "");
 	// test("%-10.👩");
 	// test("%-10.👩d");
-	test("%lc", L"");
+	// test("%lc", L""); // ???
 	// test("%ls", L"Hello");
 	// test("%ls", L"👩🏽‍🚒");
 	// test("%.3ls", L"👩🏽‍🚒");
 	// test("%.5ls", L"👩🏽‍🚒");
 	// test("% -010.5ls", L"👩🏽‍🚒");
 	// test("% -010.5S", L"👩🏽‍🚒");
-	while (1);
 	return (0);
 }

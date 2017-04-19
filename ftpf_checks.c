@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:45:48 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/13 01:31:34 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/18 15:45:03 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ bool	ftpf_checknums(const char **format, va_list ap)
 
 	if (**format == '*')
 	{
-		g_part.width = va_arg(ap, uint64_t);
+		g_part.width = va_arg(ap, int);
+		if (!(g_part.width >= 0))
+		{
+			g_part.width = g_part.width * -1;
+			g_part.flags |= NEG;
+		}
+		++(*format);
 		return (true);
 	}
 	else if (ft_isdigit(**format))
@@ -49,7 +55,12 @@ bool	ftpf_checkprecision(const char **format, va_list ap)
 		++(*format);
 		if (**format == '*')
 		{
-			g_part.prec = va_arg(ap, uint64_t);
+			g_part.prec = va_arg(ap, int);
+			if (!(g_part.prec >= 0))
+			{
+				g_part.prec = 0;
+				g_part.p = 0;
+			}
 			++(*format);
 		}
 		else
