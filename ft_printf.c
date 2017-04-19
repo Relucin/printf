@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 19:02:46 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/18 17:31:22 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/18 19:50:41 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int		ft_vasprintf(char **ret, const char *format, va_list ap)
 	{
 		ft_strncpy(tret, (*parts)->str, (*parts)->len);
 		tret += (*parts)->len;
+		free((*parts)->str);
 		free(*parts);
 		parts++;
 	}

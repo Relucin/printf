@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 21:00:17 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/18 17:31:35 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/18 20:57:46 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,8 @@ int	main(void)
 	//C
 	// ft_putendl("\n---C---");
 	// test("null %c and text", 0);
-	printf("null %c and text\n", 0);
-	ft_printf("null %c and text\n", 0);
+	// printf("null %c and text\n", 0);
+	// ft_printf("null %c and text\n", 0);
 	// test("%03c", 0);
 	// test("{% c}", 0);
 	// test("{%3c}", 0);
@@ -227,7 +227,8 @@ int	main(void)
 	// test("%-+ 010d", 10);
 	// //wchar_t
 	// ft_putendl("\n--wide--");
-	// setlocale(LC_ALL, "");
+	setlocale(LC_ALL, "");
+	// test("%C",L"�");
 	// test("%-10.👩");
 	// test("%-10.👩d");
 	// test("%lc", L""); // ???
