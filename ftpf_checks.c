@@ -6,27 +6,46 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 14:45:48 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/18 15:45:03 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/20 01:48:44 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftpf_printf.h"
 
-bool	ftpf_checknums(const char **format, va_list ap)
+bool	ftpf_wild(const char **format, bool type, va_list ap)
 {
-	uint64_t tmp;
+	int64_t tmp;
 
-	if (**format == '*')
+	tmp = va_arg(ap, int);
+	++(*format);
+	if (type)
 	{
-		g_part.width = va_arg(ap, int);
-		if (!(g_part.width >= 0))
+		if (tmp < 0)
 		{
-			g_part.width = g_part.width * -1;
+			tmp *= -1;
 			g_part.flags |= NEG;
 		}
-		++(*format);
-		return (true);
+		g_part.width = tmp;
 	}
+	else
+	{
+		if (tmp < 0)
+		{
+			g_part.prec = 0;
+			g_part.p = 0;
+		}
+		else
+			g_part.prec = tmp;
+	}
+	return (true);
+}
+
+bool	ftpf_checknums(const char **format, va_list ap)
+{
+	int64_t tmp;
+
+	if (**format == '*')
+		return (ftpf_wild(format, FTPF_WIDTH, ap));
 	else if (ft_isdigit(**format))
 	{
 		tmp = 0;
@@ -54,15 +73,7 @@ bool	ftpf_checkprecision(const char **format, va_list ap)
 		g_part.p = 1;
 		++(*format);
 		if (**format == '*')
-		{
-			g_part.prec = va_arg(ap, int);
-			if (!(g_part.prec >= 0))
-			{
-				g_part.prec = 0;
-				g_part.p = 0;
-			}
-			++(*format);
-		}
+			return (ftpf_wild(format, FTPF_PRECISION, ap));
 		else
 		{
 			g_part.prec = 0;

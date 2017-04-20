@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/08 19:02:46 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/18 19:50:41 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/19 18:19:09 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int		ft_countrep(const char *str, char c)
 {
 	int count;
 
-	//TODO: Move this to libft
 	count = 0;
 	while (*str)
 	{

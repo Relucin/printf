@@ -2,10 +2,12 @@ INCLUDES = ft_printf.o \
 			ftpf_checks.o \
 			ftpf_helpers.o \
 			ftpf_strings.o \
-			ftpf_numbers.o
+			ftpf_numbers.o \
+			ftpf_otypes.o \
+			ftpf_parse.o
 
 FLAGS 	 = -Llibft -lft -L. -lftprintf
-FLAGS2	 = -Ilibft -I. -Wall -Wextra -g
+FLAGS2	 = -Ilibft -I. -Wall -Wextra -Werror -g
 NAME	 = libftprintf.a
 
 $(NAME): $(INCLUDES)

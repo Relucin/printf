@@ -6,15 +6,15 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 16:26:49 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/19 17:39:58 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/20 02:48:03 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ftpf_printf.h"
 
-int		ftpf_wtos(char *ret, wchar_t str)
+size_t	ftpf_wtos(char *ret, wchar_t str)
 {
-	int		i;
+	size_t	i;
 
 	i = 0;
 	if (str < (MB_CUR_MAX == 1 ? 0xFF : 0x7F))
@@ -91,4 +91,35 @@ char	*ftpf_string(size_t *len, va_list ap)
 	if (g_part.width > strl)
 		return (ftpf_pad(tmp, len, strl));
 	return (tmp);
+}
+
+#define FTPF_CM(t) (!(g_part.flags & NEG)) ? g_part.width + t : t
+
+char	*ftpf_chars(size_t *len, va_list ap)
+{
+	char	*ret;
+	char	*tmp;
+
+	ret = ft_strnew(4);
+	g_part.len = 1;
+	if (g_part.length & l)
+		g_part.len += ftpf_wtos(ret, va_arg(ap, wchar_t)) - 1;
+	else
+		ret[0] = (char)va_arg(ap, int);
+	*len += g_part.len;
+	g_part.width -= (g_part.width > g_part.len) ? g_part.len : g_part.width;
+	if (g_part.width)
+	{
+		tmp = ft_strnew(g_part.len + g_part.width);
+		if (!(g_part.flags & NEG))
+			ft_strcatmulti(tmp, (g_part.flags & ZER) ? "0" : " ", g_part.width);
+		ft_memcpy(FTPF_CM(tmp), ret, g_part.len);
+		if (g_part.flags & NEG)
+			ft_strcatmulti(tmp + g_part.len, " ", g_part.width);
+		g_part.len += g_part.width;
+		*len += g_part.width;
+		free(ret);
+		return (tmp);
+	}
+	return (ret);
 }
