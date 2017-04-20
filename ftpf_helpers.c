@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 15:01:20 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/18 17:22:43 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:17:38 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ int		ftpf_parse(t_string **parts, const char *format, va_list ap)
 			}
 			format++;
 			tmp = ftpf_getstr(&format, &len, ap);
-			*parts++ = ftpf_addtstr(tmp, g_part.len);
+			if (tmp)
+				*parts++ = ftpf_addtstr(tmp, g_part.len);
 			ftpf_resetpart();
 		}
 		if (format[i] && format[i] != '%')
@@ -390,12 +391,25 @@ char	*ftpf_unsigned(size_t *len, va_list ap)
 	return (ret);
 }
 
-t_parse	g_ftpffuncs[5] = {&ftpf_string, &ftpf_chars, &ftpf_signed,
-						&ftpf_pointer, &ftpf_unsigned};
+char	*ftpf_npointer(size_t *len, va_list ap)
+{
+	if (g_part.length & (l | ll | j | z))
+		*va_arg(ap, long *) = (long)*len;
+	else if (g_part.length & h)
+		*va_arg(ap, int *) = (short)*len;
+	else if (g_part.length & hh)
+		*va_arg(ap, int *) = (char)*len;
+	else
+		*va_arg(ap, int *) = (int)*len;
+	return (0);
+}
+
+t_parse	g_ftpffuncs[6] = {&ftpf_string, &ftpf_chars, &ftpf_signed,
+						&ftpf_pointer, &ftpf_unsigned, &ftpf_npointer};
 
 char	*ftpf_getstr(const char **format, size_t *len, va_list ap)
 {
-	static char	*types = "scdpu";
+	static char	*types = "scdpun";
 	uint8_t		i;
 
 	i = 0;
