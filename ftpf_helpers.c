@@ -6,7 +6,7 @@
 /*   By: bmontoya <bmontoya@student.42.us.org>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/11 15:01:20 by bmontoya          #+#    #+#             */
-/*   Updated: 2017/04/19 17:17:38 by bmontoya         ###   ########.fr       */
+/*   Updated: 2017/04/19 17:40:15 by bmontoya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,18 +156,18 @@ void	ftpf_converter(char c)
 		g_part.type = c;
 	if (g_part.type == 'i')
 		g_part.type = 'd';
-	if (c == 'o' || c == 'u' || c == 'x' || c == 'X')
+	if (c == 'b' || c == 'o' || c == 'u' || c == 'x' || c == 'X')
 	{
-		if (c == 'o')
+		if (c == 'b')
+			g_part.base = 2;
+		else if (c == 'o')
 			g_part.base = 8;
 		else if (c == 'u')
 			g_part.base = 10;
 		else
-		{
-			if (c == 'X')
-				g_part.flags |= X;
 			g_part.base = 16;
-		}
+		if (c == 'X')
+			g_part.flags |= X;
 		g_part.type = 'u';
 	}
 }
@@ -334,19 +334,14 @@ void	ftpf_unsignedmods(char **str, size_t *tlen, size_t len)
 	g_part.prec -= (g_part.prec > len) ? len : g_part.prec;
 	len += g_part.prec;
 	if (g_part.flags & ALT)
-	{
-		if (g_part.base == 8)
-			++len;
-		else if (g_part.base == 16)
 			len += 2;
-	}
 	g_part.width -= (g_part.width > len) ? len : g_part.width;
 	len += g_part.width;
 	tmp = ft_strnew(len);
 	if (!(g_part.flags & (NEG | ZER)) && g_part.width)
 			ft_strcatmulti(tmp, " ", g_part.width);
 	if (g_part.flags & ALT)
-		ft_strcat(tmp, "0x");
+		ft_strcat(tmp, (g_part.base == 16) ? "0x" : "0b");
 	if ((g_part.flags & ZER) && !(g_part.flags & NEG) && g_part.width)
 		ft_strcatmulti(tmp, "0", g_part.width);
 	if (g_part.prec)
@@ -410,6 +405,8 @@ t_parse	g_ftpffuncs[6] = {&ftpf_string, &ftpf_chars, &ftpf_signed,
 char	*ftpf_getstr(const char **format, size_t *len, va_list ap)
 {
 	static char	*types = "scdpun";
+	char		*tmp;
+	va_list		dap;
 	uint8_t		i;
 
 	i = 0;
@@ -426,7 +423,16 @@ char	*ftpf_getstr(const char **format, size_t *len, va_list ap)
 		i++;
 	if (**format)
 		++(*format);
-	if (types[i])
+	if (types[i] && g_part.arg)
+	{
+		va_copy(dap, ap);
+		while (--g_part.arg)
+			(void)va_arg(dap, void *);
+		tmp = g_ftpffuncs[i](len, dap);
+		va_end(dap);
+		return (tmp);
+	}
+	else if (types[i])
 		return (g_ftpffuncs[i](len, ap));
 	else
 		return (ftpf_noarg(g_part.type, len));
